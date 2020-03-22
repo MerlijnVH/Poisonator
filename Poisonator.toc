@@ -1,0 +1,7 @@
+## Interface: 11304
+## Title: Poisonator
+## Notes: World of Warcraft Classic addon for keeping track of poisons.
+## Author: Merlijn Van Holder
+## Version: 1.0
+
+Poisonator.lua
