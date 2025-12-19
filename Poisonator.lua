@@ -1,26 +1,31 @@
 Poisonator = {}
 
-local frameSize = 40;
-local updateInterval = 1.0;
-local updateLast = 0;
+-- Constants
 
-local mainHandexpireTime = 0;
-local offHandexpireTime = 0;
+local FRAME_SIZE = 40
+local UPDATE_INTERVAL = 1.0
+local TIMER_OFFSET_Y = 4
+local CHARGES_OFFSET_Y = -10
+local FONT_TIMER_SIZE = 10
+local FONT_CHARGES_SIZE = 12
+
+local updateLast = 0
+local mainHandExpireTime = 0
+local offHandExpireTime = 0
 
 local frame = CreateFrame("Frame", nil, UIParent)
 frame:SetFrameStrata("BACKGROUND")
-frame:SetWidth(frameSize)
-frame:SetHeight(frameSize)
+frame:SetWidth(FRAME_SIZE)
+frame:SetHeight(FRAME_SIZE)
 frame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 
 frame:SetScript("OnUpdate", function(self, elapsed)
-  updateLast = updateLast + elapsed; 	
+	updateLast = updateLast + elapsed
 
-  while (updateLast > updateInterval) do
-	Poisonator:Init()
-
-    updateLast = updateLast - updateInterval;
-  end
+	while updateLast > UPDATE_INTERVAL do
+		Poisonator:Init()
+		updateLast = updateLast - UPDATE_INTERVAL
+	end
 end)
 
 frame:SetScript("OnEvent", function(self, event, ...)
@@ -31,47 +36,47 @@ end)
 
 local frameHandMain = CreateFrame("Frame", nil, UIParent)
 frameHandMain:SetFrameStrata("BACKGROUND")
-frameHandMain:SetWidth(frameSize)
-frameHandMain:SetHeight(frameSize)
+frameHandMain:SetWidth(FRAME_SIZE)
+frameHandMain:SetHeight(FRAME_SIZE)
 
 local frameHandSecondary = CreateFrame("Frame", nil, UIParent)
 frameHandSecondary:SetFrameStrata("BACKGROUND")
-frameHandSecondary:SetWidth(frameSize)
-frameHandSecondary:SetHeight(frameSize)
+frameHandSecondary:SetWidth(FRAME_SIZE)
+frameHandSecondary:SetHeight(FRAME_SIZE)
 
 -- Icon Frames
 
 local frameHandMainIcon = CreateFrame("Frame", nil, UIParent)
 frameHandMainIcon:SetFrameStrata("BACKGROUND")
-frameHandMainIcon:SetWidth(frameSize)
-frameHandMainIcon:SetHeight(frameSize)
+frameHandMainIcon:SetWidth(FRAME_SIZE)
+frameHandMainIcon:SetHeight(FRAME_SIZE)
 
 local frameHandSecondaryIcon = CreateFrame("Frame", nil, UIParent)
 frameHandSecondaryIcon:SetFrameStrata("BACKGROUND")
-frameHandSecondaryIcon:SetWidth(frameSize)
-frameHandSecondaryIcon:SetHeight(frameSize)
+frameHandSecondaryIcon:SetWidth(FRAME_SIZE)
+frameHandSecondaryIcon:SetHeight(FRAME_SIZE)
 
 -- Label Charges
 
 local frameHandMainCharges = CreateFrame("Frame", nil, UIParent)
-frameHandMainCharges:SetWidth(frameSize)
-frameHandMainCharges:SetHeight(frameSize)
+frameHandMainCharges:SetWidth(FRAME_SIZE)
+frameHandMainCharges:SetHeight(FRAME_SIZE)
 
 local frameHandSecondaryCharges = CreateFrame("Frame", nil, UIParent)
-frameHandSecondaryCharges:SetWidth(frameSize)
-frameHandSecondaryCharges:SetHeight(frameSize)
+frameHandSecondaryCharges:SetWidth(FRAME_SIZE)
+frameHandSecondaryCharges:SetHeight(FRAME_SIZE)
 
 -- Textures
 
-local tex = frameHandMain:CreateTexture(nil, "BACKGROUND")
-tex:SetTexture("Interface\\PaperDoll\\UI-PaperDoll-Slot-MainHand.blp")
-tex:SetAllPoints(frameHandMain)
-frameHandMain.texture = tex
+local texMain = frameHandMain:CreateTexture(nil, "BACKGROUND")
+texMain:SetTexture("Interface\\PaperDoll\\UI-PaperDoll-Slot-MainHand.blp")
+texMain:SetAllPoints(frameHandMain)
+frameHandMain.texture = texMain
 
-local tex = frameHandSecondary:CreateTexture(nil, "BACKGROUND")
-tex:SetTexture("Interface\\PaperDoll\\UI-PaperDoll-Slot-SecondaryHand.blp")
-tex:SetAllPoints(frameHandSecondary)
-frameHandSecondary.texture = tex
+local texSecondary = frameHandSecondary:CreateTexture(nil, "BACKGROUND")
+texSecondary:SetTexture("Interface\\PaperDoll\\UI-PaperDoll-Slot-SecondaryHand.blp")
+texSecondary:SetAllPoints(frameHandSecondary)
+frameHandSecondary.texture = texSecondary
 
 local texMainIcon = frameHandMainIcon:CreateTexture(nil, "BACKGROUND")
 texMainIcon:SetTexture("Interface\\Icons\\ABILITY_POISONS.blp")
@@ -83,102 +88,78 @@ texSecondaryIcon:SetTexture("Interface\\Icons\\ABILITY_POISONS.blp")
 texSecondaryIcon:SetAllPoints(frameHandSecondaryIcon)
 frameHandSecondaryIcon.texture = texSecondaryIcon
 
---
+-- Font Strings
 
-frameHandMain.text = frameHandMain:CreateFontString(nil, "ARTWORK") 
-frameHandMain.text:SetFont("Fonts\\ARIALN.ttf", 10, "OUTLINE")
-frameHandMain.text:SetPoint("CENTER", 0, 4)
-frameHandMain.text:SetText("0")
+frameHandMain.text = frameHandMain:CreateFontString(nil, "ARTWORK")
+frameHandMain.text:SetFont("Fonts\\ARIALN.ttf", FONT_TIMER_SIZE, "OUTLINE")
+frameHandMain.text:SetPoint("CENTER", 0, TIMER_OFFSET_Y)
+frameHandMain.text:SetText("")
 
-frameHandSecondary.text = frameHandSecondary:CreateFontString(nil, "ARTWORK") 
-frameHandSecondary.text:SetFont("Fonts\\ARIALN.ttf", 10, "OUTLINE")
-frameHandSecondary.text:SetPoint("CENTER", 0, 4)
-frameHandSecondary.text:SetText("0")
+frameHandSecondary.text = frameHandSecondary:CreateFontString(nil, "ARTWORK")
+frameHandSecondary.text:SetFont("Fonts\\ARIALN.ttf", FONT_TIMER_SIZE, "OUTLINE")
+frameHandSecondary.text:SetPoint("CENTER", 0, TIMER_OFFSET_Y)
+frameHandSecondary.text:SetText("")
 
-frameHandMainCharges.text = frameHandMain:CreateFontString(nil, "ARTWORK") 
-frameHandMainCharges.text:SetFont("Fonts\\ARIALN.ttf", 12, "OUTLINE")
-frameHandMainCharges.text:SetPoint("CENTER", 0, -10)
-frameHandMainCharges.text:SetText("16")
+frameHandMainCharges.text = frameHandMain:CreateFontString(nil, "ARTWORK")
+frameHandMainCharges.text:SetFont("Fonts\\ARIALN.ttf", FONT_CHARGES_SIZE, "OUTLINE")
+frameHandMainCharges.text:SetPoint("CENTER", 0, CHARGES_OFFSET_Y)
+frameHandMainCharges.text:SetText("")
 
-frameHandSecondaryCharges.text = frameHandSecondary:CreateFontString(nil, "ARTWORK") 
-frameHandSecondaryCharges.text:SetFont("Fonts\\ARIALN.ttf", 12, "OUTLINE")
-frameHandSecondaryCharges.text:SetPoint("CENTER", 0, -10)
-frameHandSecondaryCharges.text:SetText("32")
+frameHandSecondaryCharges.text = frameHandSecondary:CreateFontString(nil, "ARTWORK")
+frameHandSecondaryCharges.text:SetFont("Fonts\\ARIALN.ttf", FONT_CHARGES_SIZE, "OUTLINE")
+frameHandSecondaryCharges.text:SetPoint("CENTER", 0, CHARGES_OFFSET_Y)
+frameHandSecondaryCharges.text:SetText("")
 
---
+-- Frame Positioning
 
-frameHandMain:SetPoint("TOP", -(frameSize / 2), 0)
+frameHandMain:SetPoint("TOP", -(FRAME_SIZE / 2), 0)
 frameHandMain:Show()
 
-frameHandSecondary:SetPoint("TOP", (frameSize / 2), 0)
+frameHandSecondary:SetPoint("TOP", (FRAME_SIZE / 2), 0)
 frameHandSecondary:Show()
 
-frameHandMainIcon:SetPoint("TOP", -(frameSize / 2), 0)
+frameHandMainIcon:SetPoint("TOP", -(FRAME_SIZE / 2), 0)
 frameHandMainIcon:Hide()
 
-frameHandSecondaryIcon:SetPoint("TOP", (frameSize / 2), 0)
+frameHandSecondaryIcon:SetPoint("TOP", (FRAME_SIZE / 2), 0)
 frameHandSecondaryIcon:Hide()
 
-frameHandMainCharges:SetPoint("TOP", -(frameSize / 2), 0)
+frameHandMainCharges:SetPoint("TOP", -(FRAME_SIZE / 2), 0)
 frameHandMainCharges:Show()
 
-frameHandSecondaryCharges:SetPoint("TOP", (frameSize / 2), 0)
+frameHandSecondaryCharges:SetPoint("TOP", (FRAME_SIZE / 2), 0)
 frameHandSecondaryCharges:Show()
 
---
+-- Helper Functions
 
-function Poisonator:Init()
-    hasMainHandEnchant,
-    mainHandExpiration,
-    mainHandCharges,
-    mainHandEnchantID,
-    hasOffHandEnchant,
-    offHandExpiration,
-    offHandCharges,
-    offHandEnchantId = GetWeaponEnchantInfo()
-	
-    if hasMainHandEnchant then
-		frameHandMainIcon:Show()
-		
-		mainHandexpireTime = math.floor(mainHandExpiration / 1000)
-		
-		local hours = math.floor(mainHandexpireTime / 3600)
-		local minutes = math.floor(mainHandexpireTime / 60 - (hours * 60))
-		local seconds = math.floor(mainHandexpireTime - hours * 3600 - minutes * 60)
-		
-		local timeLeft = string.format("%02d:%02d", minutes, seconds)
-		
-        frameHandMain.text:SetText(timeLeft)
-		frameHandMainCharges.text:SetText(mainHandCharges)
+local function FormatTimeRemaining(expirationMs)
+	local expireTimeSeconds = math.floor(expirationMs / 1000)
+	local minutes = math.floor(expireTimeSeconds / 60)
+	local seconds = expireTimeSeconds % 60
+	return string.format("%02d:%02d", minutes, seconds)
+end
+
+local function UpdateWeaponDisplay(hasEnchant, expiration, charges, iconFrame, textFrame, chargesFrame)
+	if hasEnchant then
+		iconFrame:Show()
+		textFrame:SetText(FormatTimeRemaining(expiration))
+		chargesFrame:SetText(charges)
 	else
-		frameHandMainIcon:Hide()
-		frameHandMain.text:SetText("")
-		frameHandMainCharges.text:SetText("")
-	end
-	
-	if hasOffHandEnchant then
-		frameHandSecondaryIcon:Show()
-	
-		offHandexpireTime = math.floor(offHandExpiration / 1000)
-		
-		local hours = math.floor(offHandexpireTime / 3600)
-		local minutes = math.floor(offHandexpireTime / 60 - (hours * 60))
-		local seconds = math.floor(offHandexpireTime - hours * 3600 - minutes * 60)
-		
-		local timeLeft = string.format("%02d:%02d", minutes, seconds)
-		
-        frameHandSecondary.text:SetText(timeLeft)
-		frameHandSecondaryCharges.text:SetText(offHandCharges)
-	else
-		frameHandSecondaryIcon:Hide()
-		frameHandSecondary.text:SetText("")
-		frameHandSecondaryCharges.text:SetText("")
+		iconFrame:Hide()
+		textFrame:SetText("")
+		chargesFrame:SetText("")
 	end
 end
 
-function Poisonator:HideGryphons()
-    MainMenuBarLeftEndCap:Hide()
-    MainMenuBarRightEndCap:Hide()
+function Poisonator:Init()
+	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID,
+	      hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantID = GetWeaponEnchantInfo()
+
+	UpdateWeaponDisplay(hasMainHandEnchant, mainHandExpiration, mainHandCharges,
+	                    frameHandMainIcon, frameHandMain.text, frameHandMainCharges.text)
+	
+	UpdateWeaponDisplay(hasOffHandEnchant, offHandExpiration, offHandCharges,
+	                    frameHandSecondaryIcon, frameHandSecondary.text, frameHandSecondaryCharges.text)
 end
 
 Poisonator:Init()
