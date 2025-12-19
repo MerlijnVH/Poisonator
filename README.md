@@ -8,7 +8,6 @@ A lightweight World of Warcraft Classic addon designed to help rogues keep track
 - **Time Remaining**: Shows the remaining duration of your poison enchantments in MM:SS format
 - **Charge Counter**: Displays the number of remaining charges for each weapon's poison
 - **Real-time Updates**: Automatically updates when you apply or remove poisons
-- **Clean UI**: Minimal, non-intrusive interface that blends seamlessly with the WoW Classic aesthetic
 
 ## How It Works
 
@@ -27,12 +26,12 @@ Poisonator creates two small frames at the top-center of your screen, representi
 
 ## Usage
 
-Once installed, Poisonator works automatically - no configuration needed. Simply apply your poisons as normal and the tracking interface will appear at the top of your screen.
+Once installed, Poisonator works automatically, no configuration needed. Simply play the game and apply your poisons as normal and the tracking interface will appear at the top of your screen.
 
 ## Requirements
 
 - World of Warcraft Classic (tested with Interface version 11304)
-- A rogue character (or any class using weapon enchantments, I suppose)
+- A sneaky rogue character (or any class using weapon enchantments, I suppose)
 
 ## Author
 
