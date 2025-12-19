@@ -4,7 +4,7 @@ A lightweight World of Warcraft Classic addon designed to help rogues keep track
 
 ## Features
 
-- **Visual Poison Tracking**: Displays poison icons for both main-hand and off-hand weapons at the top of your screen
+- **Poison Tracking**: Displays poison icons for main-hand and off-hand weapons at the top of your screen
 - **Time Remaining**: Shows the remaining duration of your poison enchantments in MM:SS format
 - **Charge Counter**: Displays the number of remaining charges for each weapon's poison
 - **Real-time Updates**: Automatically updates when you apply or remove poisons
