@@ -36,7 +36,3 @@ Once installed, Poisonator works automatically, no configuration needed. Simply 
 ## Author
 
 Created by Merlijn Van Holder
-
-## Version
-
-1.0
